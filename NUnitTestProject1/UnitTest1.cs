@@ -50,6 +50,8 @@ namespace NUnitTestProject1
                     Thread.Sleep(500);
                     Wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
 
+                    LogFile.WriteLine(string.Format(LogLine, StepNumber, Driver.FindElement(ArticleTitleLocator).Text, Driver.Url));
+
                     try
                     {
                         Wait.Until(ExpectedConditions.ElementToBeClickable(FirstLinkLocator));
@@ -58,8 +60,6 @@ namespace NUnitTestProject1
                     {
                         Assert.Fail("The page" + Driver.Url + "does not contain main article!");
                     }
-
-                    LogFile.WriteLine(string.Format(LogLine, StepNumber, Driver.FindElement(ArticleTitleLocator).Text, Driver.Url));
 
                     if (VisitedArticles.Contains(Driver.Url))
                     {
