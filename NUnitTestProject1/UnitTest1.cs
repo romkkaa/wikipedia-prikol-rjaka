@@ -9,8 +9,8 @@ using OpenQA.Selenium.Support.UI;
 
 namespace NUnitTestProject1
 {
-	public class Tests
-	{
+    public class Tests
+    {
 
         IWebDriver Driver;
         WebDriverWait Wait;
@@ -26,16 +26,16 @@ namespace NUnitTestProject1
 
 
         [SetUp]
-		public void Setup()
-		{
+        public void Setup()
+        {
             Driver = new ChromeDriver("C:\\zAutomation");
             Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
             VisitedArticles = new HashSet<string>();
 
         }
 
-		[Test]
-		public void Test1()
+        [Test]
+        public void Test1()
         {
             Driver.Url = WikipediaUrl;
 
@@ -43,13 +43,13 @@ namespace NUnitTestProject1
 
             int StepNumber = 1;
 
-            using (StreamWriter LogFile  = new StreamWriter(@".\log.txt"))
+            using (StreamWriter LogFile = new StreamWriter(@".\log.txt"))
             {
                 while (Driver.Url != PhilosophyPageUrl)
                 {
                     Thread.Sleep(500);
                     Wait.Until(driver => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
-                    
+
                     try
                     {
                         Wait.Until(ExpectedConditions.ElementToBeClickable(FirstLinkLocator));
@@ -58,7 +58,7 @@ namespace NUnitTestProject1
                     {
                         Assert.Fail("The page" + Driver.Url + "does not contain main article!");
                     }
-                    
+
                     LogFile.WriteLine(string.Format(LogLine, StepNumber, Driver.FindElement(ArticleTitleLocator).Text, Driver.Url));
 
                     if (VisitedArticles.Contains(Driver.Url))
@@ -82,5 +82,5 @@ namespace NUnitTestProject1
         {
             Driver.Close();
         }
-	}
+    }
 }
